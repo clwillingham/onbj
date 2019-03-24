@@ -1,32 +1,32 @@
 #!/usr/bin/env node
 const program = require('commander');
 const request = require('request');
-const axios = require('axios');
 const path = require('path');
 const fs = require('fs');
 const qs = require('qs');
 
-class Index {
-    constructor(ip){
+class OnBJ {
+    constructor(ip, axios){
         this.ip = ip;
+        this.axios = axios;
         this.url = `http://${ip}:8080`;
     }
 
     async tree(){
         // let result = await r2(this.url+'/java/file/tree').json;
-        return JSON.parse((await axios(this.route('/java/file/tree'))).data);
+        return JSON.parse((await this.axios(this.route('/java/file/tree'))).data);
     }
 
     async info(){
-        return (await axios(this.route('/js/rcInfo.json'))).data;
+        return (await this.axios(this.route('/js/rcInfo.json'))).data;
     }
 
     async getFile(path){
-        return (await axios(this.route('/java/file/get', path))).data;
+        return (await this.axios(this.route('/java/file/get', path))).data;
     }
 
     async saveFile(path, source){
-        return (await axios({
+        return (await this.axios({
             method: 'post',
             url: this.route('/java/file/save', path),
             headers: { 'content-type': 'application/x-www-form-urlencoded' },
@@ -35,7 +35,7 @@ class Index {
     }
 
     async deleteFile(...paths){
-        return (await axios({
+        return (await this.axios({
             method: 'post',
             url: this.route('/java/file/delete', path),
             headers: { 'content-type': 'application/x-www-form-urlencoded' },
@@ -44,7 +44,7 @@ class Index {
     }
 
     async downloadZip(source, zip_destination){
-         let response = await axios({
+         let response = await this.axios({
              method: 'get',
              url: this.route('/java/file/download', source),
              responseType: 'stream'
@@ -54,9 +54,9 @@ class Index {
 
     async build(){
         //TODO: check status before building and handle possibility of build already running
-        let startTime = (await axios(this.route('/java/build/start'))).data;
-        let log = (await axios(this.route('/java/build/wait'))).data;
-        let status = (await axios(this.route('/java/build/status'))).data;
+        let startTime = (await this.axios(this.route('/java/build/start'))).data;
+        let log = (await this.axios(this.route('/java/build/wait'))).data;
+        let status = (await this.axios(this.route('/java/build/status'))).data;
         return {
             startTime,
             log,
@@ -69,4 +69,4 @@ class Index {
     }
 }
 
-module.exports = (ip='192.168.49.1') => new Index(ip);
+module.exports = (ip='192.168.49.1', axios = require('axios')) => new OnBJ(ip, axios);

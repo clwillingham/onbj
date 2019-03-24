@@ -1,7 +1,7 @@
 {
   "name": "onbj",
   "version": "0.0.1",
-  "description": "this is a command line interface for handling FTC's OnBotJava REST API and uploading new code from desktop",
+  "description": "This is an unofficial client library for FTC Apps OnBotJava API",
   "main": "index.js",
   "repository": "https://github.com/clwillingham/onbj",
   "author": "Chris Willingham",
