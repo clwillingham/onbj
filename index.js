@@ -6,7 +6,7 @@ const path = require('path');
 const fs = require('fs');
 const qs = require('qs');
 
-class OnBJ {
+class Index {
     constructor(ip){
         this.ip = ip;
         this.url = `http://${ip}:8080`;
@@ -69,4 +69,4 @@ class OnBJ {
     }
 }
 
-module.exports = (ip='192.168.49.1') => new OnBJ(ip);
+module.exports = (ip='192.168.49.1') => new Index(ip);

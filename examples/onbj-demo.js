@@ -1,4 +1,4 @@
-const onbj = require('../onbj')();
+const onbj = require('..')();
 const path = require('path');
 const fs = require('fs');
 testFile = fs.readFileSync(path.join(__dirname, 'testOp.java'), 'UTF-8');
