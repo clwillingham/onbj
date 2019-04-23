@@ -12,6 +12,7 @@ async function test(){
         console.log((await onbj.getFile('/src/org/firstinspires/ftc/teamcode/opmodes/TestOpMode.java')));
         console.log((await onbj.build()));
         await onbj.deleteFile('src/org/firstinspires/ftc/teamcode/opmodes/TestOpMode.java');
+
     }catch(e){
         console.log(e);
     }

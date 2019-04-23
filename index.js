@@ -52,6 +52,15 @@ class OnBJ {
         response.data.pipe(fs.createWriteStream(zip_destination));
     }
 
+    async ping(name){
+        return (await this.axios({
+            method: 'post',
+            url: this.route('/ping'),
+            headers: { 'content-type': 'application/x-www-form-urlencoded' },
+            data: qs.stringify({name: name})
+        })).data
+    }
+
     async build(){
         //TODO: check status before building and handle possibility of build already running
         let startTime = (await this.axios(this.route('/java/build/start'))).data;
